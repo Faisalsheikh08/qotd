@@ -3,10 +3,7 @@ import mongoose from "mongoose";
 const examSchema = new mongoose.Schema(
   {
     // Full name: e.g., "KVS PRT Primary (1-5)" - Auto-generated
-    fullName: {
-      type: String,
-      trim: true,
-    },
+
     // Exam name: e.g., "KVS", "BPSC", "CTET"
     exam: {
       type: String,
@@ -17,25 +14,22 @@ const examSchema = new mongoose.Schema(
     // Category: e.g., "PRT", "TGT", "TRE", "PGT"
     category: {
       type: String,
+      // required: [true, "Category is required"],
       trim: true,
     },
     // Subject: e.g., "Primary", "Secondary", "General"
     subject: {
       type: String,
+      // required: [true, "Subject is required"],
       trim: true,
     },
     // Class range: e.g., "(1-5)", "(6-10)", "(11-12)"
     class: {
       type: String,
+      // required: [true, "Class range is required"],
       trim: true,
     },
-    // Short code for easy reference: e.g., "KVS_PRT_PRIMARY_1_5"
-    code: {
-      type: String,
-      unique: true,
-      uppercase: true,
-      trim: true,
-    },
+
     // Description
     description: {
       type: String,
@@ -56,6 +50,12 @@ const examSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
+    fullName: {
+      type: String,
+      // required: [true, "Full name is required"],
+      trim: true,
+      // Enforce unique constraint
+    },
   },
   {
     timestamps: true,
@@ -64,21 +64,29 @@ const examSchema = new mongoose.Schema(
 
 // Indexes
 examSchema.index({ exam: 1, category: 1 });
-examSchema.index({ isActive: 1 });
-examSchema.index({ code: 1 });
+// examSchema.index({ code: 1 });
 
 // Pre-save hook to generate code and fullName automatically
 examSchema.pre("save", function (next) {
-  // Always generate fullName from components
+  // Validate required fields
+  if (!this.exam || !this.category || !this.subject || !this.class) {
+    return next(
+      new Error(
+        "All fields (exam, category, subject, class) are required to generate fullName"
+      )
+    );
+  }
+
+  // Generate fullName from components
   this.fullName =
     `${this.exam} ${this.category} ${this.subject} ${this.class}`.trim();
 
-  // Generate code if not provided
-  if (!this.code) {
-    this.code = `${this.exam}_${this.category}_${this.subject}_${this.class}`
-      .toUpperCase()
-      .replace(/[^A-Z0-9]/g, "_");
-  }
+  // // Generate code if not provided
+  // if (!this.code) {
+  //   this.code = `${this.exam}_${this.category}_${this.subject}_${this.class}`
+  //     .toUpperCase()
+  //     .replace(/[^A-Z0-9]/g, "_");
+  // }
 
   next();
 });
@@ -86,11 +94,6 @@ examSchema.pre("save", function (next) {
 // Static method to get all active exams
 examSchema.statics.getActiveExams = async function () {
   return this.find({ isActive: true }).sort({ exam: 1, category: 1 });
-};
-
-// Static method to find exam by code
-examSchema.statics.findByCode = async function (code) {
-  return this.findOne({ code: code.toUpperCase(), isActive: true });
 };
 
 // Static method to get exams grouped by exam name
@@ -108,7 +111,6 @@ examSchema.statics.getGroupedExams = async function () {
             category: "$category",
             subject: "$subject",
             class: "$class",
-            code: "$code",
             totalQuestions: "$totalQuestions",
           },
         },

@@ -12,7 +12,7 @@ const connectDB = async () => {
   }
 
   try {
-    await mongoose.connect("mongodb://localhost:27017/qotd", {
+    await mongoose.connect("mongodb://localhost:27017/qotd-3", {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });

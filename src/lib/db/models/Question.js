@@ -4,11 +4,19 @@ import mongoose from "mongoose";
 const questionSchema = new mongoose.Schema(
   {
     // English Question text/content
+    title: {
+      type: String,
+      // require: true,
+    },
     englishText: {
       type: String,
       required: [true, "English question text is required"],
       trim: true,
       minlength: [10, "English question must be at least 10 characters"],
+    },
+    scheduledDate: {
+      type: Date,
+      // required: true,
     },
     // Hindi Question text/content
     hindiText: {
@@ -88,7 +96,7 @@ const questionSchema = new mongoose.Schema(
     // Difficulty level
     difficulty: {
       type: String,
-      enum: ["easy", "medium", "hard", "uncategorised"],
+      enum: ["Easy", "Medium", "Hard", "Uncategorised"],
       default: "uncategorised",
     },
     // Subject/category
@@ -148,7 +156,6 @@ const questionSchema = new mongoose.Schema(
 // Indexes for efficient querying
 questionSchema.index({ examType: 1, subject: 1 });
 questionSchema.index({ difficulty: 1 });
-questionSchema.index({ isActive: 1 });
 questionSchema.index({ createdBy: 1 });
 
 // Virtual for success rate
