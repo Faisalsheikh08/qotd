@@ -10,8 +10,8 @@ export default function LoginPage() {
 
   const handleLogin = async () => {
     setLoading(true)
-    await signIn("google", { callbackUrl: "/home" })
-    setLoading(false)
+    await signIn("google", { callbackUrl: "/login/verify-phone" })
+    // setLoading(false)
   }
 
   return (
@@ -49,11 +49,11 @@ export default function LoginPage() {
 
           {/* Terms / Privacy Links */}
           <div className="text-center text-xs text-gray-400 mt-4">
-            <a href="/privacy" className="hover:underline">
+            <a href="https://www.teachingpariksha.com/privacy-policy" className="hover:underline">
               Privacy Policy
             </a>{' '}
             ·{' '}
-            <a href="/terms" className="hover:underline">
+            <a href="https://www.teachingpariksha.com/terms" className="hover:underline">
               Terms of Service
             </a>
           </div>

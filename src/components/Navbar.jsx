@@ -1,5 +1,5 @@
 "use client";
-import { IconMenu, IconMenuDeep, IconX, IconHome, IconUser, IconSettings, IconBell, IconLogout } from '@tabler/icons-react'
+import { IconMenu, IconMenuDeep, IconX, IconHome, IconUser, IconSettings, IconBell, IconLogout, IconLayoutDashboard } from '@tabler/icons-react'
 import { signOut } from 'next-auth/react';
 import Link from 'next/link';
 import React, { useState } from 'react'
@@ -8,10 +8,10 @@ const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const menuItems = [
-        { icon: <IconHome size={20} />, label: 'Home', href: '/home', color: " hover:bg-violet-200" },
-        { icon: <IconUser size={20} />, label: 'Login', href: '/login', color: " hover:bg-violet-200" },
-        { icon: <IconSettings size={20} />, label: 'Settings', href: '#', color: " hover:bg-violet-200" },
-        // { icon: <IconBell size={20} />, label: 'Notifications', href: '#', color: " hover:bg-violet-200" },
+        { icon: <IconHome size={20} />, label: 'Home', href: '/home', color: " hover:bg-gray-100" },
+        { icon: <IconUser size={20} />, label: 'Login', href: '/login', color: " hover:bg-gray-100" },
+        { icon: <IconLayoutDashboard size={20} />, label: 'Dashboard', href: '/admin/dashboard', color: " hover:bg-gray-100" },
+        { icon: <IconSettings size={20} />, label: 'Settings', href: '#', color: " hover:bg-gray-100" },
         // { icon: <IconLogout size={20} />, label: 'Logout', href: '/logout', color: " hover:bg-red-200" },
     ];
 
@@ -63,10 +63,10 @@ const Navbar = () => {
                             ))}
                         </ul>
                     </nav>
-                        <button onClick={() => signOut({ callbackUrl: '/' })} className="w-full mt-2 flex items-center gap-3 px-4 py-3 rounded-lg  transition-colors duration-200  text-white bg-red-500 cursor-pointer font-medium">
-                            <IconLogout size={20} />
-                            Sign out
-                        </button>
+                    <button onClick={() => signOut({ callbackUrl: '/' })} className="w-full mt-2 flex items-center gap-3 px-4 py-3 rounded-lg  transition-colors duration-200  text-white bg-red-500 cursor-pointer font-medium">
+                        <IconLogout size={20} />
+                        Sign out
+                    </button>
 
                     <div className='border-t border-gray-200 pt-4 mt-4'>
                         <p className='text-sm text-gray-500 text-center'>© {new Date().getFullYear()} Teaching Pariksha</p>

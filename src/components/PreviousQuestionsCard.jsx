@@ -11,7 +11,7 @@ import React from 'react'
 // }
 const PreviousQuestionsCard = ({ question }) => {
     return (
-        <div className="max-w-2xl p-4 mt-2 border border-gray-200 rounded-lg shadow-md hover:shadow-md transition">
+        <div className=" p-4 mt-2 border border-gray-200 bg-white rounded-lg shadow-md hover:shadow-md transition">
             {/* Title */}
             <div className='flex justify-between items-start gap-2'>
                 <h2 className="text-lg font-semibold text-gray-900 truncate ">
@@ -23,7 +23,7 @@ const PreviousQuestionsCard = ({ question }) => {
             </div>
 
             {/* Description */}
-            <p className="text-sm text-gray-600 mt-2 truncate">
+            <p className="text-sm text-gray-600 mt-1 truncate">
                 {question.description}
             </p>
 
@@ -31,7 +31,7 @@ const PreviousQuestionsCard = ({ question }) => {
             <div className="flex flex-wrap gap-2 mt-2">
                 {question.tags.map((tag, index) => (
                     // if tag is beginner then bg-green-100 else if intermediate then bg-yellow-100 then advanced bg-red-100 else purple-100
-                    <span key={index} className={`text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded ${tag === "Beginner" ? "bg-green-100" : tag === "Intermediate" ? "bg-yellow-100" : tag === "Advanced" ? "bg-red-100" : "bg-purple-100"}`}>
+                    <span key={index} className={`text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded ${tag === "Beginner" ? "bg-green-100" : tag === "Intermediate" ? "bg-amber-100" : tag === "Advanced" ? "bg-red-100" : "bg-purple-100"}`}>
                         {tag}
                     </span>
                 ))}

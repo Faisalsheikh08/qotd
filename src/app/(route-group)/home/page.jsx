@@ -1,5 +1,5 @@
 'use client'
-import React, { Suspense, useRef, useEffect } from 'react'
+import React, { Suspense, useRef, useEffect, Fragment, useState } from 'react'
 import Navbar from '@/components/Navbar'
 import { redirect, RedirectType } from 'next/navigation'
 import { useSession } from 'next-auth/react'
@@ -8,6 +8,10 @@ import { IconArrowRight } from '@tabler/icons-react'
 import Heading from '@/components/Heading'
 import PreviousQuestionsCard from '@/components/PreviousQuestionsCard'
 import CourseCard from '@/components/CourseCard'
+import MonthCalendar from '@/components/Calendar'
+import Image from 'next/image'
+import Ads from '@/components/Ads'
+import Testimonial from '@/components/Testimonial'
 
 const questions = [
     {
@@ -155,57 +159,91 @@ export const courses = [
     }
 ];
 
-
+const ads = [
+    "/assets/ads/ad_4.jpg",
+    "/assets/ads/ad_3.jpg",
+    // "/assets/ads/ad_1.jpg",
+    // "/assets/ads/ad_2.jpg",
+    // "/assets/ads/ad_5.jpg",
+]
 const Page = () => {
     return (
-        <div>
+        <div className='bg-violet-50'>
             <Navbar />
-            <div className='min-h-dvh px-2 md:px-4 lg:px-8 pt-18 pb-2'>
-                <div className='max-w-2xl mx-auto'>
-                    <Suspense fallback={<UserProfileSkeleton />}>
-                        <UserProfile />
-                    </Suspense>
+            <div className='min-h-dvh'>
+                <div className="flex flex-col md:flex-row justify-center gap-4 lg:gap-8 px-2 md:px-4 lg:px-8 pt-18 pb-2">
+                    <div className='flex-1 min-w-0 lg:max-w-3xl'>
+                        <Suspense fallback={<UserProfileSkeleton />}>
+                            <UserProfile />
+                        </Suspense>
 
-                    {/* Question of the day Card component */}
-                    <div className='select-none relative bg-gradient-to-br from-violet-600 via-violet-600 to-violet-400 rounded-xl min-h-36 max-w-2xl text-white mt-4 p-0 transition-all duration-300 ease shadow-lg hover:scale-[1.03] hover:shadow-xl'>
-                        <div className='px-4 pt-4'>
-                            <p className='text-md text-white/60'>
-                                Question of the day
-                            </p>
-                            <div className='absolute top-5 right-4'>
-                                <Countdown targetDate={"2025-10-14T24:00:00"} />
-                                <p className='text-xs text-white/60 text-right mt-2'>Hours Remaining</p>
+                        {/* Question of the day Card component */}
+                        <div className='select-none relative bg-gradient-to-br from-violet-600 via-violet-600 to-violet-400 rounded-xl min-h-36 text-white mt-4 p-0 transition-all duration-300 ease shadow-lg hover:scale-[1.03] hover:shadow-xl'>
+                            <div className='px-4 pt-4'>
+                                <p className='text-md text-white/60'>
+                                    Question of the day
+                                </p>
+                                <div className='absolute top-5 right-4'>
+                                    <Countdown />
+                                    <p className='text-xs text-white/60 text-right mt-2'>Hours Remaining</p>
+                                </div>
+
+                                <h1 className='text-xl mt-0 max-w-[60%] leading-6'>
+                                    Today's Topic: Current Affairs
+                                </h1>
                             </div>
-
-                            <h1 className='text-xl mt-0 max-w-[60%] leading-6'>
-                                Today's Topic: Current Affairs
-                            </h1>
+                            <img className='h-28 relative rotate-y-180' src="/assets/writing.svg" alt="" />
+                            <Link href={'/question-of-the-day'} className='absolute bottom-4 right-4 inline-flex gap-1 bg-white text-violet-600 rounded-full py-2 px-3 font-medium'>
+                                Answer Now <IconArrowRight stroke={1.5} />
+                            </Link>
                         </div>
-                        <img className='h-28 relative rotate-y-180' src="/assets/writing.svg" alt="" />
-                        <Link href={'/question-of-the-day'} className='absolute bottom-4 right-4 inline-flex gap-1 bg-white text-violet-600 rounded-full py-2 px-3 font-medium'>
-                            Answer Now <IconArrowRight stroke={1.5} />
-                        </Link>
-                    </div>
 
-                    {/* Previous Questions */}
-                    <Heading className="mt-6 px-2 border-b-2 pb-1 border-gray-300 max-w-2xl">Previous Questions</Heading>
-                    {questions.map((question) => (
-                        <PreviousQuestionsCard key={question.id} question={question} />
-                    ))}
-                </div>
-                <Heading className="mt-14 mb-2 px-2 font-bold text-3xl text-center ">Checkout Related Courses</Heading>
-                <div className="flex flex-wrap gap-4 md:gap-8 justify-center mt-2">
-                    {courses.map((course, index) => (
-                        <CourseCard key={course.id + index} course={course} />
-                    ))}
+                        {/* Previous Questions */}
+                        <Heading className="mt-6 px-2 border-b-2 pb-1 border-gray-300">Previous Questions</Heading>
+                        {questions.map((question) => (
+                            <PreviousQuestionsCard key={question.id} question={question} />
+                        ))}
+                    </div>
+                    <div className='w-full md:w-72 md:flex-shrink-0 pt-18 md:pt-14 '>
+                        <div className='w-full md:max-w-70 mx-auto px-4 md:px-'>
+                            <RightSidebar />
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     )
 }
 
+const RightSidebar = () => {
+    const today = new Date();
+    const month = today.getMonth(); // 0-indexed
+    const year = today.getFullYear();
+
+    return (
+        <Fragment>
+            <Testimonial />
+            <div className='max-w-72 mx-auto'>
+                <MonthCalendar
+                    month={month}
+                    year={year}
+                    values={[
+                        { date: "2025-10-01", count: 5 },
+                        { date: "2025-10-05", count: 15 },
+                        { date: "2025-10-12", count: 30 },
+                    ]}
+                    onDayClick={(iso, count) => console.log(iso, count)}
+                />
+            </div>
+            {ads.map((path, index) => (
+                <Ads key={index} path={path} />
+            ))}
+        </Fragment>
+    )
+}
 // Separate component for user profile logic
 const UserProfile = () => {
+    const [imageError, setImageError] = useState(false)
     const { data: session, status } = useSession()
 
     // Show skeleton while loading
@@ -218,18 +256,27 @@ const UserProfile = () => {
         redirect('/login', RedirectType.replace)
     }
 
-    const user = session.user
+    const user = session.user;
+    console.log(user)
+
+
+    const imageUrl = !imageError && user?.image ? user.image : '/assets/default_profile.png'
 
     return (
         <div className='flex gap-3 items-center w-full'>
-            <img
-                className='h-10 aspect-square object-cover rounded-full shadow-md'
-                src={user?.image || `https://static.vecteezy.com/system/resources/thumbnails/003/337/584/small_2x/default-avatar-photo-placeholder-profile-icon-vector.jpg`}
-                alt="Profile Picture"
+            <Image
+                className='object-cover rounded-full shadow-md'
+                src={imageUrl}
+                alt={user?.name || 'User avatar'}
+                width={40}
+                height={40}
+                onError={() => setImageError(true)}
+                priority={false}
             />
             <div className='flex flex-col justify-center gap-4'>
                 <h1 className='text-md font-semibold leading-0'>{user?.name}</h1>
                 <p className='text-xs text-gray-600 leading-0' >{user?.email}</p>
+
             </div>
             <div className='ml-auto space-x-2'>
                 {/* <span className='bg-orange-100 py-2 px-2 rounded-full text-orange-500 shadow-[inset_0_0_0_2px_#fdba74] font-semibold text-sm'>
@@ -258,6 +305,12 @@ const UserProfileSkeleton = () => {
 }
 
 function Countdown({ targetDate }) {
+    // here i want that if the user dont give a target date then it should take the next midnight as the target date
+    const now = new Date();
+    if (!targetDate) {
+        now.setHours(24, 0, 0, 0);
+        targetDate = now;
+    }
     const hoursRef = useRef(null);
     const minutesRef = useRef(null);
     const secondsRef = useRef(null);
