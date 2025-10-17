@@ -130,7 +130,7 @@ const seedData = async () => {
       type: "descriptive",
       englishCorrectAnswer: "Patna is the capital of Bihar.",
       hindiCorrectAnswer: "पटना बिहार की राजधानी है।",
-      aICorrect: [
+      aiCorrect: [
         {
           englishText: "The capital city of Bihar is Patna.",
           hindiText: "बिहार की राजधानी शहर पटना है।",
@@ -154,7 +154,7 @@ const seedData = async () => {
         "The education system in Bihar includes primary, secondary, and higher education managed by the state government.",
       hindiCorrectAnswer:
         "बिहार में शिक्षा प्रणाली में प्राथमिक, माध्यमिक और उच्च शिक्षा शामिल है जो राज्य सरकार द्वारा प्रबंधित की जाती है।",
-      aICorrect: [
+      aiCorrect: [
         {
           englishText:
             "Bihar's education system comprises schools and universities under state control.",
@@ -179,7 +179,7 @@ const seedData = async () => {
       type: "descriptive",
       englishCorrectAnswer: "The main river of Bihar is the Ganges.",
       hindiCorrectAnswer: "बिहार की मुख्य नदी गंगा है।",
-      aICorrect: [
+      aiCorrect: [
         {
           englishText: "The Ganges is the primary river flowing through Bihar.",
           hindiText: "गंगा बिहार से बहने वाली मुख्य नदी है।",
@@ -202,7 +202,7 @@ const seedData = async () => {
         "Patna, formerly Pataliputra, has a rich history dating back to the Maurya Empire.",
       hindiCorrectAnswer:
         "पटना, जो पहले पाटलिपुत्र था, का इतिहास मौर्य साम्राज्य से जुड़ा है।",
-      aICorrect: [
+      aiCorrect: [
         {
           englishText:
             "Patna was a major center during the Maurya and Gupta empires.",

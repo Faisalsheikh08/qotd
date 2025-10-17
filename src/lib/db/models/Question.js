@@ -55,7 +55,7 @@ const questionSchema = new mongoose.Schema(
       select: false, // Don't expose in queries by default
     },
     // AI-generated correct answers (array for multiple acceptable answers in both languages)
-    aICorrect: [
+    aiCorrect: [
       {
         englishText: {
           type: String,
