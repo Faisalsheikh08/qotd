@@ -12,17 +12,22 @@
   "dependencies": {
     "@lexical/react": "^0.37.0",
     "@tabler/icons-react": "^3.35.0",
+    "aws-sdk": "^2.1692.0",
+    "axios": "^1.12.2",
     "dotenv": "^17.2.3",
     "lexical": "^0.37.0",
     "mongoose": "^8.19.1",
     "next": "15.5.4",
     "next-auth": "^4.24.11",
     "react": "19.1.0",
-    "react-dom": "19.1.0"
+    "react-dom": "19.1.0",
+    "twilio": "^5.10.3"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
+    "@types/node": "^24.8.1",
+    "@types/react": "^19.2.2",
     "eslint": "^9",
     "eslint-config-next": "15.5.4",
     "tailwindcss": "^4"
